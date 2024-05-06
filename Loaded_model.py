@@ -8,7 +8,7 @@ def main():
 
     # File upload
     uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
-    diagnosis = ""
+    
     if uploaded_file is not None:
         try:
             # Load the trained model
@@ -16,17 +16,19 @@ def main():
 
             data = pd.read_csv(uploaded_file)
 
-            # Make predictions
+            # Make predictions for each record
             predictions = model.predict(data)
 
-            if predictions[0] == 0:
-                diagnosis = 'The user is a Valid User'
-            else:
-                diagnosis = 'The user is an Invalid User'
+            # Display predictions
+            st.write("Predictions:")
+            for i, prediction in enumerate(predictions):
+                if prediction == 0:
+                    st.write(f"Record {i+1}: The user is a Valid User")
+                else:
+                    st.write(f"Record {i+1}: The user is an Invalid User")
 
         except Exception as e:
-            st.error(e)
-    st.success(diagnosis)
+            st.error("Error loading the model. Please make sure the file is correct and not corrupted.")
 
 # Run the app
 if __name__ == '__main__':
