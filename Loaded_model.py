@@ -1,36 +1,32 @@
 import streamlit as st
 import pandas as pd
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.linear_model import LogisticRegression
-import joblib
+import pickle
 
 # Define the Streamlit app
 def main():
-    st.title("Email Spam Detection")
+    st.title("Credit Card Fraud Detection")
 
     # File upload
     uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
-
+    diagnosis = ""
     if uploaded_file is not None:
         try:
-            # Load the trained model and vectorizer
-            model = joblib.load('C:\\Users\\LENOVO\\Downloads\\spam_detection_model.sav')
-            vectorizer = joblib.load('C:\\Users\\LENOVO\\Downloads\\spam_vectorizer.sav')
+            # Load the trained model
+            model = pickle.load(open('trained_model.sav', 'rb'))
 
             data = pd.read_csv(uploaded_file)
 
-            # Preprocess the data
-            X = vectorizer.transform(data['Message'])
-
             # Make predictions
-            predictions = model.predict(X)
+            predictions = model.predict(data)
 
-            # Display results
-            results = pd.DataFrame({'Message': data['Message'], 'Category': predictions})
-            st.write(results)
+            if predictions[0] == 0:
+                diagnosis = 'The user is a Valid User'
+            else:
+                diagnosis = 'The user is an Invalid User'
 
         except Exception as e:
-            st.error("Error loading the model or vectorizer. Please make sure the files are correct and not corrupted.")
+            st.error("Error loading the model. Please make sure the file is correct and not corrupted.")
+    st.success(diagnosis)
 
 # Run the app
 if __name__ == '__main__':
