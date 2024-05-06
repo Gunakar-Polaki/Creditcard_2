@@ -25,7 +25,7 @@ def main():
                 diagnosis = 'The user is an Invalid User'
 
         except Exception as e:
-            st.error("Error loading the model. Please make sure the file is correct and not corrupted.")
+            st.error(e)
     st.success(diagnosis)
 
 # Run the app
