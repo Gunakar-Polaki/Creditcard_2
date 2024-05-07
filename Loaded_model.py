@@ -7,7 +7,7 @@ def main():
     st.title("Credit Card Fraud Detection")
 
     # File upload
-    uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
+    uploaded_file = st.file_uploader("Choose a CSV or Excel file", type=["csv", "xlsx"])
     
     if uploaded_file is not None:
         try:
