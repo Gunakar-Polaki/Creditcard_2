@@ -12,7 +12,7 @@ def main():
     if uploaded_file is not None:
         try:
             # Load the trained model
-            model = pickle.load(open('trained_model.sav', 'rb'))
+            model = pickle.load(open('trained_model_2.sav', 'rb'))
 
             data = pd.read_csv(uploaded_file)
 
