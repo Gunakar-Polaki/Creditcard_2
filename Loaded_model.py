@@ -14,7 +14,10 @@ def main():
             # Load the trained model
             model = pickle.load(open('trained_model_2.sav', 'rb'))
 
-            data = pd.read_csv(uploaded_file)
+            if uploaded_file.name.endswith('.csv'):
+                data = pd.read_csv(uploaded_file)
+            else:  # Assume Excel file
+                data = pd.read_excel(uploaded_file)
 
             # Make predictions for each record
             predictions = model.predict(data)
@@ -28,7 +31,7 @@ def main():
                     st.write(f"Record {i+1}: The user is an Invalid User")
 
         except Exception as e:
-            st.error("Error loading the model. Please make sure the file is correct and not corrupted.",e)
+            st.error(f"Error loading the model or processing the data: {e}")
 
 # Run the app
 if __name__ == '__main__':
