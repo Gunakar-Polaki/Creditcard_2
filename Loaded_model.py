@@ -7,17 +7,13 @@ def main():
     st.title("Credit Card Fraud Detection")
 
     # File upload
-    uploaded_file = st.file_uploader("Choose a CSV or Excel file", type=["csv", "xlsx"])
+    uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
     
     if uploaded_file is not None:
         try:
             # Load the trained model
             model = pickle.load(open('trained_model_2.sav', 'rb'))
-
-            if uploaded_file.name.endswith('.csv'):
-                data = pd.read_csv(uploaded_file)
-            else:  # Assume Excel file
-                data = pd.read_excel(uploaded_file)
+            data = pd.read_csv(uploaded_file)
 
             # Make predictions for each record
             predictions = model.predict(data)
