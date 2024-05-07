@@ -28,7 +28,7 @@ def main():
                     st.write(f"Record {i+1}: The user is an Invalid User")
 
         except Exception as e:
-            st.error("Error loading the model. Please make sure the file is correct and not corrupted.")
+            st.error("Error loading the model. Please make sure the file is correct and not corrupted.",e)
 
 # Run the app
 if __name__ == '__main__':
